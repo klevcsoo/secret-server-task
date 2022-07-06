@@ -8,6 +8,7 @@
     <node-interpreter value="project" />
     <envs>
       <env name="EXPRESS_PORT" value="5480" />
+      <env name="DEV_ENV" value="true" />
     </envs>
     <method v="2" />
   </configuration>
