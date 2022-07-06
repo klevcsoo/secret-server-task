@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run Express server" type="js.build_tools.npm" singleton="false">
+    <package-json value="$PROJECT_DIR$/backend/package.json" />
+    <command value="run" />
+    <scripts>
+      <script value="start" />
+    </scripts>
+    <node-interpreter value="project" />
+    <envs>
+      <env name="EXPRESS_PORT" value="5480" />
+    </envs>
+    <method v="2" />
+  </configuration>
+</component>
