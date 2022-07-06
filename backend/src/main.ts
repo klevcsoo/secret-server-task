@@ -47,3 +47,11 @@ app.get("/v1/secret/:hash", (request, response) => {
     logWithTime("info", `Finding secret with hash ${hash}`);
     response.sendStatus(200);
 });
+
+app.all("/v1/*", (request, response) => {
+    logWithTime(
+        "error",
+        `Client requested missing API endpoint: ${request.path} (${request.method})`
+    );
+    response.sendStatus(404);
+});
