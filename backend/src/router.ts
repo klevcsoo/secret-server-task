@@ -44,10 +44,10 @@ router.post("/v1/secret/", async (request, response) => {
     }
 
     const secret = request.body["secret"] as string;
-    const expiresAfter = request.body["expiresAfter"] as number;
-    const allowedViews = request.body["allowedViews"] as number;
+    const expireAfter = request.body["expireAfter"] as number;
+    const expireAfterViews = request.body["expireAfterViews"] as number;
 
-    if (!allExists(secret, expiresAfter, allowedViews) && expiresAfter !== 0) {
+    if (!allExists(secret, expireAfter, expireAfterViews) && expireAfter !== 0) {
         response.sendStatus(406);
         writeLog("error", "Failed to create secret: Missing request args");
         return;
@@ -55,8 +55,8 @@ router.post("/v1/secret/", async (request, response) => {
 
     try {
         const hash = await createSecret({
-            expiresInM: expiresAfter,
-            allowedViews: allowedViews,
+            expiresInM: expireAfter,
+            allowedViews: expireAfterViews,
             text: secret
         });
         writeLog("info", `New secret created`);
