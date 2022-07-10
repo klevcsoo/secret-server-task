@@ -6,6 +6,10 @@
     p {
         @apply text-sm
     }
+
+    a {
+        @apply underline
+    }
 }
 
 body {
