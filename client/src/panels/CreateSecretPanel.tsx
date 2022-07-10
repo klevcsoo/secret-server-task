@@ -1,6 +1,7 @@
 import {useSecret} from "../hooks";
 import {useCallback, useState} from "react";
 import {BasicButton, NumericInput, TextInput} from "../components";
+import CloseRounded from "@mui/icons-material/CloseRounded";
 
 const CreateSecretPanel = () => {
     const {createSecret} = useSecret();
@@ -8,6 +9,7 @@ const CreateSecretPanel = () => {
     const [expireAfter, setExpireAfter] = useState(0);
     const [expireAfterViews, setExpireAfterViews] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [hash, setHash] = useState<string>();
 
     const doCreateSecret = useCallback(() => {
         setLoading(true);
@@ -46,6 +48,34 @@ const CreateSecretPanel = () => {
                 </p>
             </div>
             <BasicButton text="Create" onClick={doCreateSecret} loading={loading}/>
+            {!hash ? null : (
+                <div className={"flex flex-col gap-2 rounded-xl bg-slate-100 p-4"}>
+                    <div className={"flex flex-row items-center justify-between"}>
+                        <h2 className={"text-xl font-bold"}>
+                            New secret created!
+                        </h2>
+                        <button type="button" onClick={() => {
+                            setHash(undefined);
+                            setSecret("");
+                            setExpireAfter(0);
+                            setExpireAfterViews(1);
+                        }}>
+                            <CloseRounded color={"inherit"}/>
+                        </button>
+                    </div>
+                    <p>
+                        <b>Hash:</b><br/>
+                        {hash}<br/>
+                    </p>
+                    {!!navigator["clipboard"] ? (
+                        <BasicButton text="Copy hash to clipboard" onClick={() => {
+                            navigator.clipboard.writeText(hash).then(() => {
+                                console.log("Response copied to clipboard");
+                            });
+                        }}/>
+                    ) : null}
+                </div>
+            )}
         </div>
     );
 };
