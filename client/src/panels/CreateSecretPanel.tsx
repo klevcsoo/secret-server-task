@@ -12,14 +12,18 @@ const CreateSecretPanel = () => {
     const [hash, setHash] = useState<string>();
 
     const doCreateSecret = useCallback(() => {
+        setHash(undefined);
         setLoading(true);
-        createSecret({
-            secret: secret, expireAfter: expireAfter, expireAfterViews: expireAfterViews
-        }).then((hash) => {
-            console.log("Hash:", hash);
-        }).catch((err) => {
-            console.error("Failed to create secret:", err);
-        }).finally(() => setLoading(false));
+        setTimeout(() => {
+            createSecret({
+                secret: secret, expireAfter: expireAfter, expireAfterViews: expireAfterViews
+            }).then((hash) => {
+                console.log("Hash:", hash);
+                setHash(hash);
+            }).catch((err) => {
+                console.error("Failed to create secret:", err);
+            }).finally(() => setLoading(false));
+        }, 500);
     }, [createSecret, secret, expireAfter, expireAfterViews]);
 
     return (

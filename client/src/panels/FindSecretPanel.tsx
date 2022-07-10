@@ -11,13 +11,16 @@ const FindSecretPanel = () => {
     const [secret, setSecret] = useState<Secret>();
 
     const doFindSecret = useCallback(() => {
+        setSecret(undefined);
         setLoading(true);
-        findSecret(hash).then((secret) => {
-            console.log("Found secret:", secret);
-            setSecret(secret);
-        }).catch((err) => {
-            console.log("Failed to find secret:", err);
-        }).finally(() => setLoading(false));
+        setTimeout(() => {
+            findSecret(hash).then((secret) => {
+                console.log("Found secret:", secret);
+                setSecret(secret);
+            }).catch((err) => {
+                console.log("Failed to find secret:", err);
+            }).finally(() => setLoading(false));
+        }, 500);
     }, [findSecret, hash]);
 
     return (
