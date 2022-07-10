@@ -9,6 +9,9 @@
     <envs>
       <env name="EXPRESS_PORT" value="5480" />
       <env name="DEV_ENV" value="true" />
+      <env name="MONGODB_HOST" value="192.168.0.34" />
+      <env name="MONGODB_USER" value="secret-api-user" />
+      <env name="MONGODB_PWD" value="swyqBwIyi4kv6DJ9" />
     </envs>
     <method v="2" />
   </configuration>
