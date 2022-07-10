@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Secret API",
+  "name": "Secret Server by klevcsoo",
   "icons": [
     {
       "src": "favicon.ico",
