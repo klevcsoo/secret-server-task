@@ -1,14 +1,10 @@
 import express from "express";
-import cors from "cors";
 import {EXPRESS_PORT} from "./config";
 import {writeLog} from "./utils";
 import {closeDatabase, initDatabase} from "./database";
 import router from "./router";
 
 const app = express();
-
-// Using CORS for compatibility with other sites
-app.use(cors());
 
 // Enable custom router
 app.use("/", router);

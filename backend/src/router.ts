@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import {join as joinPath} from "path";
 import {allExists, writeLog} from "./utils";
 import {createSecret, findSecret} from "./secrets";
@@ -17,7 +18,7 @@ router.use(express.static(staticDir));
 // Any request coming through "/v1/secret/" is tested
 // for its "Accept" header to see what type of media
 // needs to be in the response
-router.use("/v1/secret/", (request, response, next) => {
+router.use("/v1/secret/", cors(), (request, response, next) => {
     const requestedType = request.header("accept");
 
     // If the "Accept" header is XML, the response
