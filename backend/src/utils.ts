@@ -1,3 +1,9 @@
+/**
+ * Print text in the form of info or error to the
+ * default output.
+ * @param type the type of the log
+ * @param body the value to be logged as text
+ */
 export function writeLog(type: "info" | "error", body: any) {
     const timestamp = (() => {
         const raw = new Date();
@@ -21,4 +27,13 @@ export function writeLog(type: "info" | "error", body: any) {
             break;
         }
     }
+}
+
+/**
+ * Checks whether all the arguments have values or not.
+ * @param args the arguments to be checked
+ */
+export function allExists(...args: any[]): boolean {
+    for (const a of args) if (!a) return false;
+    return true;
 }
