@@ -7,7 +7,7 @@ import {createSecret, findSecret} from "./secrets";
 const router = express.Router();
 
 // Using JSON for POST requests
-router.use(express.urlencoded());
+router.use(express.urlencoded({extended: true}));
 router.use(express.json());
 
 // Static files are served from the React build directory.
