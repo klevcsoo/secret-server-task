@@ -1,0 +1,5 @@
+# Heroku dist dir
+dist
+
+# macOS Stuff
+.DS_Store
