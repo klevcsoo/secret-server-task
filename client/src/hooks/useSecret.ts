@@ -1,7 +1,10 @@
 import {Secret, SecretCreationRequestData} from "../types";
 import {useCallback} from "react";
 
-const secretServerUrl = `${window.location.protocol}//${window.location.hostname}:5480`;
+const DEV_ENV = process.env.DEV_ENV;
+const secretServerUrl = !!DEV_ENV ?
+    `${window.location.protocol}//${window.location.hostname}:5480`:
+    `https://secret-api-klevcsoo.herokuapp.com`;
 
 function useSecret(): {
     findSecret(hash: string): Promise<Secret>

@@ -1,22 +1,13 @@
 import express from "express";
 import cors from "cors";
-import {join as joinPath} from "path";
 import {allExists, writeLog} from "./utils";
 import {createSecret, findSecret} from "./secrets";
-import { DEV_ENV } from "./config";
 
 const router = express.Router();
 
 // Using JSON for POST requests
 router.use(express.urlencoded({extended: true}));
 router.use(express.json());
-
-// Static files are served from the React build directory.
-const staticDir = DEV_ENV ?
-    joinPath(__dirname, "../..", "client", "build") :
-    joinPath(__dirname, "..", "public");
-writeLog("info", `Serving static files from ${staticDir}`);
-router.use(express.static(staticDir));
 
 // Any request coming through "/v1/secret/" is tested
 // for its "Accept" header to see what type of media
