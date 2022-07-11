@@ -1,4 +1,4 @@
-const EXPRESS_PORT = process.env.EXPRESS_PORT;
+const EXPRESS_PORT = process.env.PORT;
 const MONGODB_HOST = process.env.MONGODB_HOST;
 const MONGODB_USER = process.env.MONGODB_USER;
 const MONGODB_PWD = process.env.MONGODB_PWD;

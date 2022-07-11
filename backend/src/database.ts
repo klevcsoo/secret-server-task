@@ -5,7 +5,7 @@ import {writeLog} from "./utils";
 writeLog("info", `Initializing MongoDB client... (${MONGODB_HOST})`);
 let client;
 try {
-    const url = `mongodb://${MONGODB_USER}:${MONGODB_PWD}@${MONGODB_HOST}/secret-server`;
+    const url = `mongodb+srv://${MONGODB_USER}:${MONGODB_PWD}@${MONGODB_HOST}/secret-server`;
     client = new MongoClient(url);
 } catch (err) {
     writeLog("error", `Init failed: ${err}`);
