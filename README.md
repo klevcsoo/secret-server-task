@@ -1,5 +1,9 @@
 # Secret Server Coding Task
 
+## Access
+The API itself is accessable through [Heroku](https://secret-api-klevcsoo.herokuapp.com),
+and the GUI is through [GitHub Pages](https://klevcsoo.github.io/secret-server-task/).
+
 ## Introduction
 Your task is to implement a secret server. The secret server can be used to store and share secrets
 using the random generated URL. But the secret can be read only a limited number of times after that
