@@ -1,14 +1,9 @@
-import {CircularProgress} from "@mui/material";
+import {ReactComponent as Loader} from "../assets/loader.svg";
 
 const LoadingSpinner = () => {
     return (
-        <div style={{
-            width: 40, height: 40,
-            fill: "black",
-            margin: "5px auto",
-            transform: "scale(0.8)"
-        }}>
-            <CircularProgress color="inherit"/>
+        <div className={"h-8 w-8 m-auto"}>
+            <Loader/>
         </div>
     );
 };

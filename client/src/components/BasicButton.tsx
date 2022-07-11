@@ -7,12 +7,11 @@ const BasicButton = (props: {
 }) => {
     return (
         <button type="button" onClick={() => props.onClick()}
-                className={"w-full h-8 bg-blue-500 rounded-lg"}>
-            {props.loading ? (
-                <LoadingSpinner/>
-            ) : (
-                <span className={"text-white"}>{props.text}</span>
-            )}
+                className={"w-full h-8 bg-blue-500 rounded-lg disabled:bg-blue-400"}
+                disabled={props.loading}>
+            <span className={"text-white"}>
+                {props.loading ? <LoadingSpinner/> : props.text}
+            </span>
         </button>
     );
 };
