@@ -38,7 +38,9 @@ router.post("/v1/secret/", async (request, response) => {
     writeLog("info", "Incoming request to create new secret...");
 
     if (!request.body) {
-        response.sendStatus(406);
+        response.status(406).send({
+            message: "Missing request body"
+        });
         writeLog("error", "Failed to create secret: Missing request body");
         return;
     }
@@ -48,7 +50,9 @@ router.post("/v1/secret/", async (request, response) => {
     const expireAfterViews = request.body["expireAfterViews"] as number;
 
     if (!allExists(secret, expireAfter, expireAfterViews) && expireAfter !== 0) {
-        response.sendStatus(406);
+        response.status(406).send({
+            message: "Missing request args"
+        });
         writeLog("error", "Failed to create secret: Missing request args");
         return;
     }
@@ -63,7 +67,9 @@ router.post("/v1/secret/", async (request, response) => {
         response.status(201).send({hash: hash});
     } catch (err) {
         writeLog("error", `Failed to create new secret: ${err}`);
-        response.sendStatus(500);
+        response.status(500).send({
+            message: err
+        });
     }
 });
 
@@ -75,15 +81,21 @@ router.get("/v1/secret/:hash", async (request, response) => {
 
     const hash = request.params["hash"] as string;
     if (!hash) {
-        response.sendStatus(406);
+        response.status(406).send({
+            message: "Missing hash from request"
+        });
         writeLog("error", "Failed to find secret: Missing hash from request");
         return;
     }
 
     const findError = (err: any) => {
         writeLog("error", `Error while trying to find secret: ${err}`);
-        if (err === "not-found") response.sendStatus(404);
-        else response.sendStatus(500);
+        if (err === "not-found") response.status(404).send({
+            message: err
+        });
+        else response.status(500).send({
+            message: err
+        });
     };
 
     try {
