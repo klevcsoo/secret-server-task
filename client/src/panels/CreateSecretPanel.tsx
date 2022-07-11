@@ -10,11 +10,19 @@ const CreateSecretPanel = () => {
     const [expireAfterViews, setExpireAfterViews] = useState(1);
     const [loading, setLoading] = useState(false);
     const [hash, setHash] = useState<string>();
+    const [error, setError] = useState<string>();
 
     const doCreateSecret = useCallback(() => {
         setHash(undefined);
+        setError(undefined);
         setLoading(true);
         setTimeout(() => {
+            if (!secret) {
+                setError("Missing secret");
+                setLoading(false);
+                return;
+            }
+
             createSecret({
                 secret: secret, expireAfter: expireAfter, expireAfterViews: expireAfterViews
             }).then((hash) => {
@@ -22,6 +30,7 @@ const CreateSecretPanel = () => {
                 setHash(hash);
             }).catch((err) => {
                 console.error("Failed to create secret:", err);
+                setError(err);
             }).finally(() => setLoading(false));
         }, 500);
     }, [createSecret, secret, expireAfter, expireAfterViews]);
@@ -59,6 +68,7 @@ const CreateSecretPanel = () => {
                             New secret created!
                         </h2>
                         <button type="button" onClick={() => {
+                            setError(undefined);
                             setHash(undefined);
                             setSecret("");
                             setExpireAfter(0);
@@ -78,6 +88,25 @@ const CreateSecretPanel = () => {
                             });
                         }}/>
                     ) : null}
+                </div>
+            )}
+            {!error ? null : (
+                <div className={"flex flex-col gap-2 rounded-xl bg-red-100 p-4"}>
+                    <div className={"flex flex-row items-center justify-between"}>
+                        <h2 className={"text-xl font-bold"}>
+                            Error!
+                        </h2>
+                        <button type="button" onClick={() => {
+                            setError(undefined);
+                            setHash(undefined);
+                            setSecret("");
+                            setExpireAfter(0);
+                            setExpireAfterViews(1);
+                        }}>
+                            <CloseRounded color={"inherit"}/>
+                        </button>
+                    </div>
+                    <p>{String(error).replaceAll("Error: ", "")}</p>
                 </div>
             )}
         </div>

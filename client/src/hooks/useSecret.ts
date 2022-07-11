@@ -8,24 +8,37 @@ function useSecret(): {
     createSecret(data: SecretCreationRequestData): Promise<string>
 } {
     const find = useCallback(async (hash: string) => {
-        console.log(hash);
-        return (await fetch(`${secretServerUrl}/v1/secret/${hash}`, {
+        const res = await fetch(`${secretServerUrl}/v1/secret/${hash}`, {
             method: "GET",
             headers: {
                 "Accept": "application/json"
             }
-        }).then((res) => res.json())) as Secret;
+        });
+        const body = await res.json();
+
+        if (res.status !== 200) {
+            throw new Error(body.message);
+        }
+
+        return body as Secret;
     }, []);
 
     const create = useCallback(async (data: SecretCreationRequestData) => {
-        return (await fetch(`${secretServerUrl}/v1/secret/`, {
+        const res = await fetch(`${secretServerUrl}/v1/secret/`, {
             method: "POST",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
-        }).then((res) => res.json()))["hash"] as string;
+        });
+        const body = await res.json();
+
+        if (res.status !== 201) {
+            throw new Error(body.message);
+        }
+
+        return body.hash as string;
     }, []);
 
     return {

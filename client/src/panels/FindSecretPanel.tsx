@@ -9,9 +9,11 @@ const FindSecretPanel = () => {
     const [hash, setHash] = useState("");
     const [loading, setLoading] = useState(false);
     const [secret, setSecret] = useState<Secret>();
+    const [error, setError] = useState<string>();
 
     const doFindSecret = useCallback(() => {
         setSecret(undefined);
+        setError(undefined);
         setLoading(true);
         setTimeout(() => {
             findSecret(hash).then((secret) => {
@@ -19,6 +21,7 @@ const FindSecretPanel = () => {
                 setSecret(secret);
             }).catch((err) => {
                 console.log("Failed to find secret:", err);
+                setError(err);
             }).finally(() => setLoading(false));
         }, 500);
     }, [findSecret, hash]);
@@ -71,6 +74,22 @@ const FindSecretPanel = () => {
                             });
                         }}/>
                     ) : null}
+                </div>
+            )}
+            {!error ? null : (
+                <div className={"flex flex-col gap-2 rounded-xl bg-red-100 p-4"}>
+                    <div className={"flex flex-row items-center justify-between"}>
+                        <h2 className={"text-xl font-bold"}>
+                            Error!
+                        </h2>
+                        <button type="button" onClick={() => {
+                            setError(undefined);
+                            setHash("");
+                        }}>
+                            <CloseRounded color={"inherit"}/>
+                        </button>
+                    </div>
+                    <p>{String(error).replaceAll("Error: ", "")}</p>
                 </div>
             )}
         </div>
