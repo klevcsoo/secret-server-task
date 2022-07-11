@@ -15,6 +15,12 @@ export async function findSecret(hash: string): Promise<Secret> {
     const collection = database().collection("secrets");
     const result: Secret = await collection.findOne({hash: hash});
 
+    // If the secret with the given hash does not exist
+    // throw an error
+    if (!result) {
+        throw new Error("Secret doesn't exist")
+    }
+
     // If the secret expired, delete it from the database
     // and throw an error
     if (Date.now() > result.expiresAt && result.expiresAt !== 0) {

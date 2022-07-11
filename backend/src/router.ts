@@ -68,7 +68,7 @@ router.post("/v1/secret/", async (request, response) => {
     } catch (err) {
         writeLog("error", `Failed to create new secret: ${err}`);
         response.status(500).send({
-            message: err
+            message: String(err)
         });
     }
 });
@@ -88,27 +88,15 @@ router.get("/v1/secret/:hash", async (request, response) => {
         return;
     }
 
-    const findError = (err: any) => {
-        writeLog("error", `Error while trying to find secret: ${err}`);
-        if (err === "not-found") response.status(404).send({
-            message: err
-        });
-        else response.status(500).send({
-            message: err
-        });
-    };
-
     try {
         const secret = await findSecret(hash);
-        if (!secret) {
-            findError("not-found");
-            return;
-        }
-
         writeLog("info", "Secret found with given hash");
         response.status(200).send(secret);
     } catch (err) {
-        findError(err);
+        writeLog("error", `Error while trying to find secret: ${err}`);
+        response.status(404).send({
+            message: String(err)
+        });
     }
 });
 
@@ -119,7 +107,9 @@ router.all("/v1/*", (request, response) => {
         "error",
         `Client requested missing API endpoint: ${request.path} (${request.method})`
     );
-    response.sendStatus(404);
+    response.status(404).send({
+        message: `Missing API endpoint ${request.path} (${request.method})`
+    });
 });
 
 export default router;
