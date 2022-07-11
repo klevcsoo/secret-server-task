@@ -4,7 +4,8 @@
   "main": "build/main.js",
   "author": "Keve Lajsz",
   "scripts": {
-    "prestart": "tsc",
+    "tsc": "./node_modules/typescript/bin/tsc",
+    "postinstall": "npm run tsc",
     "start": "node ."
   },
   "devDependencies": {
