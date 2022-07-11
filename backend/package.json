@@ -6,7 +6,8 @@
   "scripts": {
     "tsc": "./node_modules/typescript/bin/tsc",
     "postinstall": "npm run tsc",
-    "start": "node ."
+    "start": "node .",
+    "dev": "tsc && PORT=5480 DEV_ENV=true MONGODB_HOST=127.0.0.1 MONGODB_USER=secret-api-user MONGODB_PWD=swyqBwIyi4kv6DJ9 node ."
   },
   "devDependencies": {
     "@types/node": "^18.0.3",

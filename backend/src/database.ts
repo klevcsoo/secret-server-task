@@ -1,11 +1,12 @@
 import {MongoClient} from "mongodb";
-import {MONGODB_PWD, MONGODB_HOST, MONGODB_USER} from "./config";
+import {MONGODB_PWD, MONGODB_HOST, MONGODB_USER, DEV_ENV} from "./config";
 import {writeLog} from "./utils";
 
 writeLog("info", `Initializing MongoDB client... (${MONGODB_HOST})`);
 let client;
 try {
-    const url = `mongodb+srv://${MONGODB_USER}:${MONGODB_PWD}@${MONGODB_HOST}/secret-server`;
+    const protocol = DEV_ENV ? "mongodb" : "mongodb+srv";
+    const url = `${protocol}://${MONGODB_USER}:${MONGODB_PWD}@${MONGODB_HOST}/secret-server`;
     client = new MongoClient(url);
 } catch (err) {
     writeLog("error", `Init failed: ${err}`);
