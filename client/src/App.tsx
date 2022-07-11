@@ -17,7 +17,8 @@ function App() {
             {creationPanel ? <CreateSecretPanel/> : <FindSecretPanel/>}
             <p>
                 2022 © made by{" "}
-                <a href="https://github.com/klevcsoo" target="_blank">klevcsoo</a>
+                <a href="https://github.com/klevcsoo" rel="noreferrer"
+                   target="_blank">klevcsoo</a>
             </p>
         </div>
     );
