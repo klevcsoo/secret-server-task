@@ -6,7 +6,9 @@
   "scripts": {
     "prestart": "tsc",
     "start": "node .",
-    "build": "tsc"
+    "build": "tsc && mkdir -p build/public && rsync --progress ../client/build/* build/public/",
+    "predeploy": "npm run build",
+    "deploy": "cd .. && git subtree push --prefix backend heroku master"
   },
   "devDependencies": {
     "@types/node": "^18.0.3",
