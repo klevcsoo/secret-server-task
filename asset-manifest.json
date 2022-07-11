@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/secret-server-task/static/css/main.b7fca7f5.css",
+    "main.js": "/secret-server-task/static/js/main.03c41e9a.js",
+    "static/media/logo-wide.svg": "/secret-server-task/static/media/logo-wide.02f7182070db14f838e8ba57b484326f.svg",
+    "static/media/loader.svg": "/secret-server-task/static/media/loader.51bc967efaf7994b010c82245899f711.svg",
+    "index.html": "/secret-server-task/index.html",
+    "main.b7fca7f5.css.map": "/secret-server-task/static/css/main.b7fca7f5.css.map",
+    "main.03c41e9a.js.map": "/secret-server-task/static/js/main.03c41e9a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b7fca7f5.css",
+    "static/js/main.03c41e9a.js"
+  ]
+}
