@@ -8,7 +8,7 @@ function App() {
 
     return (
         <div className={"flex flex-col gap-8 items-center p-8"}>
-            <AppLogo className={"max-w-lg"} height={200}/>
+            <AppLogo className={"max-w-full md:max-w-lg max-h-32"}/>
             <TabSwitcher tabTitles={["Create secret", "Find secret"]}
                          currentTabIndex={creationPanel ? 0 : 1}
                          onCurrentTabIndexChanged={(index) => {
