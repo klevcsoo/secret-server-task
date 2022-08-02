@@ -62,7 +62,7 @@ const CreateSecretPanel = () => {
             </div>
             <BasicButton text="Create" onClick={doCreateSecret} loading={loading}/>
             {!hash ? null : (
-                <div className={"flex flex-col gap-2 rounded-xl bg-slate-100 p-4"}>
+                <div className={"flex flex-col gap-2 rounded-xl bg-slate-100 dark:bg-neutral-800 p-4"}>
                     <div className={"flex flex-row items-center justify-between"}>
                         <h2 className={"text-xl font-bold"}>
                             New secret created!
@@ -91,7 +91,7 @@ const CreateSecretPanel = () => {
                 </div>
             )}
             {!error ? null : (
-                <div className={"flex flex-col gap-2 rounded-xl bg-red-100 p-4"}>
+                <div className={"flex flex-col gap-2 rounded-xl bg-red-100 dark:bg-red-900 p-4"}>
                     <div className={"flex flex-row items-center justify-between"}>
                         <h2 className={"text-xl font-bold"}>
                             Error!
