@@ -2,7 +2,7 @@ import {useCallback, useState} from "react";
 import CloseRounded from "@mui/icons-material/CloseRounded";
 import {BasicButton, BoolSwitcher, ClipboardButton, TextInput} from "../components";
 import {useSecret} from "../hooks";
-import {FindResult, Secret} from "../types";
+import {FindResult} from "../types";
 
 const FindSecretPanel = () => {
     const {findSecret} = useSecret();
