@@ -1,6 +1,6 @@
 import {useCallback, useState} from "react";
 import CloseRounded from "@mui/icons-material/CloseRounded";
-import {BasicButton, BoolSwitcher, TextInput} from "../components";
+import {BasicButton, BoolSwitcher, ClipboardButton, TextInput} from "../components";
 import {useSecret} from "../hooks";
 import {FindResult, Secret} from "../types";
 
@@ -73,11 +73,8 @@ const FindSecretPanel = () => {
                         {secret.obj.secretText}
                     </p>
                     {!!navigator["clipboard"] ? (
-                        <BasicButton text="Copy raw response to clipboard" onClick={() => {
-                            navigator.clipboard.writeText(secret.raw).then(() => {
-                                console.log("Response copied to clipboard");
-                            });
-                        }}/>
+                        <ClipboardButton title="Copy raw response to clipboard"
+                                         copyContent={secret.raw} />
                     ) : null}
                 </div>
             )}
