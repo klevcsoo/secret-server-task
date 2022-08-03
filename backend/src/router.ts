@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import {js2xml} from "xml-js"
 import {allExists, writeLog} from "./utils";
 import {createSecret, findSecret} from "./secrets";
 
@@ -13,7 +14,7 @@ router.use(express.json());
 // for its "Accept" header to see what type of media
 // needs to be in the response
 router.use("/v1/secret/", cors(), (request, response, next) => {
-    const requestedType = request.header("accept");
+    const requestedType = request.header("Accept");
 
     // If the "Accept" header is XML, the response
     // is in XML, however, if it's anything else,
@@ -84,8 +85,14 @@ router.get("/v1/secret/:hash", async (request, response) => {
 
     try {
         const secret = await findSecret(hash);
-        writeLog("info", "Secret found with given hash");
-        response.status(200).send(secret);
+        const type = response.getHeader("Content-Type").toString();
+        writeLog("info", `Secret found with given hash. Returning as ${type}`);
+
+        if (type === "application/xml") {
+            response.status(200).send(js2xml({secret: secret}, {spaces: 4, compact: true}))
+        } else {
+            response.status(200).send(secret);
+        }
     } catch (err) {
         writeLog("error", `Error while trying to find secret: ${err}`);
         response.status(404).send({

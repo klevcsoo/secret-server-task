@@ -1,14 +1,15 @@
 import {useCallback, useState} from "react";
 import CloseRounded from "@mui/icons-material/CloseRounded";
-import {BasicButton, TextInput} from "../components";
+import {BasicButton, BoolSwitcher, TextInput} from "../components";
 import {useSecret} from "../hooks";
-import {Secret} from "../types";
+import {FindResult, Secret} from "../types";
 
 const FindSecretPanel = () => {
     const {findSecret} = useSecret();
     const [hash, setHash] = useState("");
+    const [xmlType, setXmlType] = useState(false)
     const [loading, setLoading] = useState(false);
-    const [secret, setSecret] = useState<Secret>();
+    const [secret, setSecret] = useState<FindResult>();
     const [error, setError] = useState<string>();
 
     const doFindSecret = useCallback(() => {
@@ -16,15 +17,15 @@ const FindSecretPanel = () => {
         setError(undefined);
         setLoading(true);
         setTimeout(() => {
-            findSecret(hash).then((secret) => {
-                console.log("Found secret:", secret);
-                setSecret(secret);
+            findSecret(hash, xmlType).then((result) => {
+                console.log("Found secret:", result);
+                setSecret(result);
             }).catch((err) => {
                 console.log("Failed to find secret:", err);
                 setError(err);
             }).finally(() => setLoading(false));
         }, 500);
-    }, [findSecret, hash]);
+    }, [findSecret, hash, xmlType]);
 
     return (
         <div className={"flex flex-col gap-8 max-w-lg"}>
@@ -36,9 +37,13 @@ const FindSecretPanel = () => {
                     this hash can the server can decrypt the secret text.
                 </p>
             </div>
+            <BoolSwitcher title="Get response as XML" checked={xmlType}
+                          onCheckedChanged={setXmlType} />
             <BasicButton text="Find" onClick={doFindSecret} loading={loading}/>
             {!secret ? null : (
-                <div className={"flex flex-col gap-2 rounded-xl bg-slate-100 dark:bg-neutral-800 p-4"}>
+                <div className={`
+                    flex flex-col gap-2 rounded-xl bg-slate-100 dark:bg-neutral-800 p-4
+                `}>
                     <div className={"flex flex-row items-center justify-between"}>
                         <h2 className={"text-xl font-bold"}>
                             Secret found!
@@ -52,24 +57,24 @@ const FindSecretPanel = () => {
                     </div>
                     <p>
                         <b>Hash:</b><br/>
-                        {secret.hash}<br/>
+                        {secret.obj.hash}<br/>
                         <b>Created at:</b><br/>
-                        {new Date(secret.createdAt).toLocaleDateString()}{" "}
-                        {new Date(secret.createdAt).toLocaleTimeString()}<br/>
+                        {new Date(secret.obj.createdAt).toLocaleDateString()}{" "}
+                        {new Date(secret.obj.createdAt).toLocaleTimeString()}<br/>
                         <b>Expires at:</b><br/>
-                        {!secret.expiresAt ? "Never" : (
-                            new Date(secret.expiresAt).toLocaleDateString()
+                        {!secret.obj.expiresAt ? "Never" : (
+                            new Date(secret.obj.expiresAt).toLocaleDateString()
                             + " " +
-                            new Date(secret.expiresAt).toLocaleTimeString()
+                            new Date(secret.obj.expiresAt).toLocaleTimeString()
                         )}<br/>
                         <b>Remaining views:</b><br/>
-                        {secret.remainingViews}<br/>
+                        {secret.obj.remainingViews}<br/>
                         <b>Content:</b><br/>
-                        {secret.secretText}
+                        {secret.obj.secretText}
                     </p>
                     {!!navigator["clipboard"] ? (
                         <BasicButton text="Copy raw response to clipboard" onClick={() => {
-                            navigator.clipboard.writeText(JSON.stringify(secret)).then(() => {
+                            navigator.clipboard.writeText(secret.raw).then(() => {
                                 console.log("Response copied to clipboard");
                             });
                         }}/>
